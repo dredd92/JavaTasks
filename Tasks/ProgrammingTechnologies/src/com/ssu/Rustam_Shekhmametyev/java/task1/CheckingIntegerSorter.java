@@ -23,7 +23,7 @@ public class CheckingIntegerSorter {
         return true;
     }
 
-    private void start() throws InterruptedException{
+    public void start(){
         Scanner input = new Scanner(System.in);
         int startNumberOfThreads = Thread.activeCount();
         System.out.println("Number of threads active: " + startNumberOfThreads);
@@ -60,10 +60,5 @@ public class CheckingIntegerSorter {
             System.out.print(array[i] + " ");
         }
         System.out.println();
-    }
-
-    public static void main(String[] args) throws InterruptedException{
-        CheckingIntegerSorter app = new CheckingIntegerSorter();
-        app.start();
     }
 }

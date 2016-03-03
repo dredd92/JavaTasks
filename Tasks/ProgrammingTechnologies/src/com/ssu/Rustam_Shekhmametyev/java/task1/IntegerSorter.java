@@ -3,8 +3,6 @@ package com.ssu.Rustam_Shekhmametyev.java.task1;
 /**
  * Created by Rustam Shekhmametyev on 3/1/2016.
  */
-import org.omg.CORBA.Environment;
-
 import java.lang.*;
 import java.util.*;
 public  class IntegerSorter{
