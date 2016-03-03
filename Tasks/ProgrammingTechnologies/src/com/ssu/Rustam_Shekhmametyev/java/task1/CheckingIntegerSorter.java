@@ -1,5 +1,6 @@
 package com.ssu.Rustam_Shekhmametyev.java.task1;
 
+import java.io.*;
 import java.util.*;
 /**
  * Created by Rustam on 3/1/2016.
@@ -7,7 +8,6 @@ import java.util.*;
 public class CheckingIntegerSorter {
 
     static Random randGenerator = new Random();
-
     private void setRandom(int[] array){
         for(int i = 0; i < array.length; i++){
             array[i] = randGenerator.nextInt(array.length);
@@ -23,42 +23,45 @@ public class CheckingIntegerSorter {
         return true;
     }
 
-    public void start(){
-        Scanner input = new Scanner(System.in);
+    public void start() throws FileNotFoundException, IOException{
+        String basePath = new File("").getAbsolutePath();
+        String inputPath = basePath.concat("/IO files/input.txt");
+        String outputPath = basePath.concat("/IO files/output.txt");
+        File outputFile = new File(outputPath);
+        if(outputFile.exists())
+            outputFile.delete();
+            outputFile.createNewFile();
+        PrintWriter output = new PrintWriter(new FileOutputStream(outputPath));
+        BufferedReader input = new BufferedReader(new FileReader(inputPath));
         int startNumberOfThreads = Thread.activeCount();
-        System.out.println("Number of threads active: " + startNumberOfThreads);
-        System.out.print("Enter the size of the array to be sorted: ");
-        int size = input.nextInt();
+        int size = Integer.parseInt(input.readLine());
         if(size < 0){
             throw new IllegalArgumentException("The size of the array must be a positive integer");
         }
         int[] array = new int[size];
         setRandom(array);
-        System.out.println("Unsorted array: ");
-        print(array);
+        output.println("Unsorted array: ");
+        print(array, output);
         double startTime = System.currentTimeMillis();
         IntegerSorter.quicksort(array);
         while(Thread.activeCount() != startNumberOfThreads){
         }
-        System.out.println("Working time (in seconds): " + (System.currentTimeMillis() - startTime) / 1000);
-        System.out.println("Sorted array: ");
-        print(array);
+        output.println("Working time (in seconds): " + (System.currentTimeMillis() - startTime) / 1000);
+        output.println("Sorted array: ");
+        print(array, output);
 
         if(checkIfSorted(array)){
-            System.out.println("The array is sorted");
+            output.println("The array is sorted");
         } else{
-            System.out.println("The array is not sorted. An error in the sorting algorithm occurred.");
+            output.println("The array is not sorted. An error in the sorting algorithm occurred.");
         }
+        output.close();
     }
 
-    private void print(int[] array){
-        if(array.length > 46000){
-            System.out.println("Length of the array is too great to display here");
-            return;
-        }
+    private void print(int[] array, PrintWriter output) throws FileNotFoundException{
         for(int i = 0; i < array.length; i++){
-            System.out.print(array[i] + " ");
+            output.print(array[i] + " ");
         }
-        System.out.println();
+        output.println();
     }
 }
