@@ -26,7 +26,7 @@ public class CheckingIntegerSorter {
     public void start() throws FileNotFoundException, IOException{
         String basePath = new File("").getAbsolutePath();
         String inputPath = basePath.concat("/IO files/Task1/input.txt");
-        String outputPath = basePath.concat("/IO files/task1/output.txt");
+        String outputPath = basePath.concat("/IO files/Task1/output.txt");
         File outputFile = new File(outputPath);
         if(outputFile.exists())
             outputFile.delete();

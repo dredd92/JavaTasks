@@ -4,9 +4,9 @@ package com.ssu.Rustam_Shekhmametyev.java.task2;
  * Created by Rustam on 3/10/2016.
  */
 public class FoodItem {
-    String name;
-    int weight;
-    int price;
+    private String name;
+    private int weight;
+    private int price;
 
     public int getPrice() {
         return price;
@@ -45,8 +45,12 @@ public class FoodItem {
     }
 
     public FoodItem(FoodItem item){
+        this.weight = item.weight;
+        this.price = item.price;
         this.name = item.name;
-        this.price = price;
-        this.name = new String(item.name);
+    }
+
+    public String toString(){
+        return String.format("name: %s\nweight: %d\nprice: %d\n", name, weight, price);
     }
 }
