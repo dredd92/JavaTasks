@@ -1,27 +1,19 @@
-package com.ssu.Rustam_Shekhmametyev.java.task3;
+package com.ssu.Rustam_Shekhmametyev.java.task5;
 
 /**
  * Created by Rustam on 3/10/2016.
  */
-import com.ssu.Rustam_Shekhmametyev.java.task3.Exceptions.FoodItemInvalidArgumentException;
-import com.ssu.Rustam_Shekhmametyev.java.task3.Exceptions.MenuEmptyArgumentException;
-import com.ssu.Rustam_Shekhmametyev.java.task3.Exceptions.MenuInvalidArgumentException;
-import com.ssu.Rustam_Shekhmametyev.java.task3.Exceptions.MenuInvalidFormatException;
-import com.sun.javaws.exceptions.InvalidArgumentException;
+
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
+import com.ssu.Rustam_Shekhmametyev.java.task5.Exceptions.*;
 
 public class Menu {
     private ArrayList<FoodItem> menu = new ArrayList<FoodItem>();
     private static final int maxItemCharLength = 24;
-
-    public Menu(ArrayList<FoodItem> items){
-        this.menu = new ArrayList<FoodItem>(items);
-    }
 
     public Menu(String pathToMenuFile) throws IOException, MenuInvalidFormatException, MenuInvalidArgumentException{
         BufferedReader input = new BufferedReader(new FileReader(pathToMenuFile));
@@ -38,6 +30,10 @@ public class Menu {
             temp = input.readLine();
         }
         input.close();
+    }
+
+    public Menu(ArrayList<FoodItem> items){
+        this.menu = new ArrayList<FoodItem>(items);
     }
 
     public static int getMaxItemCharLength() {

@@ -1,6 +1,7 @@
-package com.ssu.Rustam_Shekhmametyev.java.task3;
+package com.ssu.Rustam_Shekhmametyev.java.task5;
 
-import com.ssu.Rustam_Shekhmametyev.java.task3.Exceptions.*;
+import com.ssu.Rustam_Shekhmametyev.java.task5.Exceptions.*;
+
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -16,11 +17,6 @@ public class OrdersParser {
     private ArrayList<Order> orders = new ArrayList<Order>();
     private Menu menu;
 
-    public OrdersParser(Menu menu, ArrayList<Order> orders){
-        this.menu = menu;
-        this.orders = new ArrayList<>(orders);
-    }
-
     public OrdersParser(Menu menu, String pathToOrdersFile) throws IOException, OrderParserInvalidFormatException,
             OrderParserEmptyArgumentException{
         if (menu == null){
@@ -30,25 +26,34 @@ public class OrdersParser {
         BufferedReader input = new BufferedReader(new FileReader(pathToOrdersFile));
         String temp = input.readLine();
         String clientName = null;
+        this.orders = new ArrayList<>(parseOrder(pathToOrdersFile, menu));
+    }
+
+    public static ArrayList<Order> parseOrder(String pathToOrdersFile, Menu menu) throws IOException, OrderParserInvalidFormatException{
+        ArrayList<Order> result = new ArrayList<>();
+        BufferedReader input = new BufferedReader(new FileReader(pathToOrdersFile));
+        String temp = input.readLine();
+        String clientName = null;
         ArrayList<FoodItem> orderedItems = null;
 
         try {
             while (temp != null) {
                 if (temp.contains(":")) {
-                        if (orderedItems != null) {
-                            orders.add(new Order(clientName, orderedItems));
-                        }
+                    if (orderedItems != null) {
+                        result.add(new Order(clientName, orderedItems));
+                    }
 
                     clientName = temp.substring(0, temp.length() - 1);
                     orderedItems = new ArrayList<FoodItem>();
                 } else {
-                        orderedItems.add(menu.getFoodItemByName(temp));
+                    orderedItems.add(menu.getFoodItemByName(temp));
                 }
                 temp = input.readLine();
             }
-                orders.add(new Order(clientName, orderedItems));
+            result.add(new Order(clientName, orderedItems));
 
             input.close();
+            return result;
         }
         catch (MenuInvalidArgumentException | FoodItemInvalidArgumentException | OrderInvalidArgumentException e){
             throw new OrderParserInvalidFormatException(e, pathToOrdersFile);
